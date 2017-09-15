@@ -1,0 +1,9 @@
+[ignore]
+.*/node_modules/jss/lib/.*\.js\.flow
+[include]
+
+[libs]
+
+[lints]
+
+[options]
