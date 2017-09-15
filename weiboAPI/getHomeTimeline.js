@@ -15,7 +15,8 @@ const defaultConfig = {
  * 获取当前登录用户及其所关注（授权）用户的最新微博
  * @param {Object} 请求参数
  */
-function getHomeTimeline(config = defaultConfig) {
+function getHomeTimeline(params = {}) {
+  const config = Object.assign({}, defaultConfig, params);
   return axios({
     url: 'https://api.weibo.com/2/statuses/home_timeline.json',
     method: 'get',

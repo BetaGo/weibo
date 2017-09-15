@@ -6,7 +6,12 @@ const defaultConfig = {
   screen_name: null, // 需要查询的用户昵称。
 };
 
-function getUserInfo(config = defaultConfig) {
+/**
+ * 根据用户ID获取用户信息
+ * @param {Object} params
+ */
+function getUserInfo(params = {}) {
+  const config = Object.assign({}, defaultConfig, params);
   return axios({
     method: 'get',
     params: config,
