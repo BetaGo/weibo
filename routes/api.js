@@ -10,6 +10,7 @@ const router = express.Router();
 function routerFactoryGet(path, apiFunc) {
   router.get(path, async (req, res, next) => {
     if (!req.session.user) {
+      res.sendStatus(401);
       res.json({
         error: '未授权',
       });

@@ -12,3 +12,14 @@ const defaultConfig = {
   feature,          // false  int  过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。
   trim_user,        // false  int  返回值中user字段开关，0：返回完整user字段、1：user字段仅返回user_id，默认为0。
 };
+
+function getUserTimeline(params = {}) {
+  const config = Object.assign({}, defaultConfig, params);
+  return axios({
+    method: 'get',
+    params: config,
+    url: 'https://api.weibo.com/2/statuses/user_timeline.json',
+  });
+}
+
+module.exports = getUserTimeline;

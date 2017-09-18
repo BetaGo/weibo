@@ -20,23 +20,21 @@ class componentName extends Component {
   };
   render() {
     return (
-      <div>
+      <Paper>
         <Route path="/home" component={HomeHeader} />
-        <Paper>
-          <Tabs
-            value={this.state.value}
-            onChange={this.handleChange}
-            fullWidth
-            indicatorColor="primary"
-            textColor="primary"
-          >
-            <Tab icon={<HomeIcon />} />
-            <Tab icon={<SearchIcon />} />
-            <Tab icon={<NotificationsIcon />} />
-            <Tab icon={<MessageIcon />} />
-          </Tabs>
-        </Paper>
-      </div>
+        <Tabs
+          value={this.state.value}
+          onChange={this.handleChange}
+          fullWidth
+          indicatorColor="primary"
+          textColor="primary"
+        >
+          <Tab icon={<HomeIcon />} />
+          <Tab icon={<SearchIcon />} />
+          <Tab icon={<NotificationsIcon />} />
+          <Tab icon={<MessageIcon />} />
+        </Tabs>
+      </Paper>
     );
   }
 }

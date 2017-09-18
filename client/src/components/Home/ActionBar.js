@@ -9,7 +9,13 @@ const styles = {
   root: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
     maxWidth: '340px'
+  },
+  item: {
+    display: 'flex',
+    alignItems: 'center'
   }
 };
 
@@ -18,16 +24,19 @@ class ActionBar extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <div>
-          <CommentIcon /> 12
+        <div className={classes.item}>
+          <CommentIcon />
+          <span>12</span>
         </div>
-        <div>
-          <RepeatIcon /> 206
+        <div className={classes.item}>
+          <RepeatIcon />
+          <span>206</span>
         </div>
-        <div>
-          <FavoriteIcon /> 234
+        <div className={classes.item}>
+          <FavoriteIcon />
+          <span>234</span>
         </div>
-        <div>
+        <div className={classes.item}>
           <MessageIcon />
         </div>
       </div>
