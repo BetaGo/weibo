@@ -11,7 +11,8 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    maxWidth: '340px'
+    maxWidth: '340px',
+    marginTop: '0.6em'
   },
   item: {
     display: 'flex',
