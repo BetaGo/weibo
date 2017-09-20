@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
