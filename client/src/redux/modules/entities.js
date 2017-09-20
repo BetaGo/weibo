@@ -7,7 +7,7 @@ const LOAD_SUCCESS = 'weibo/tweets/LOAD_SUCCESS';
 const LOAD_FAIL = 'weibo/tweets/LOAD_FAIL';
 
 const initialState = {
-  user: {},
+  users: {},
   tweets: {},
   retweet: {},
   error: {},
@@ -53,7 +53,7 @@ export function load() {
       if (homeTimeline) {
         dispatch({
           type: LOAD_SUCCESS,
-          payload: normalize(homeTimeline, timeline)
+          payload: normalize(homeTimeline.data, timeline).entities
         });
       } else {
         dispatch({

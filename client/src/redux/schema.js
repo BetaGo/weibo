@@ -11,6 +11,8 @@ export const tweet = new schema.Entity('tweets', {
   retweeted_status: retweet
 });
 
-export const timeline = new schema.Entity('timelines', {
-  statuses: [tweet]
-});
+export const timeline = new schema.Entity(
+  'timelines',
+  { statuses: [tweet] },
+  { idAttribute: 'next_cursor' }
+);
