@@ -4,10 +4,7 @@ class Tweet extends Component {
   render() {
     return (
       <div>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        
       </div>
     );
   }

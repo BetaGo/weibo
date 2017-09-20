@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import { withStyles } from 'material-ui/styles';
 import RepeatIcon from 'material-ui-icons/Repeat';
@@ -20,22 +21,30 @@ const styles = {
   }
 };
 
-class ActionBar extends Component {
+type Props = {
+  classes: Object,
+  reposts_count: number,
+  comments_count: number,
+  attitudes_count: number
+};
+
+class ActionBar extends Component<Props> {
   render() {
     const { classes } = this.props;
+    const { reposts_count, comments_count, attitudes_count } = this.props;
     return (
       <div className={classes.root}>
         <div className={classes.item}>
           <CommentIcon />
-          <span>12</span>
+          <span>{comments_count}</span>
         </div>
         <div className={classes.item}>
           <RepeatIcon />
-          <span>206</span>
+          <span>{reposts_count}</span>
         </div>
         <div className={classes.item}>
           <FavoriteIcon />
-          <span>234</span>
+          <span>{attitudes_count}</span>
         </div>
         <div className={classes.item}>
           <MessageIcon />

@@ -44,35 +44,37 @@ const styles = {
   }
 };
 
-const text =
-  '【mysql 证明为什么用limit时，offset很大会影响性能】http://t.cn/R63lloW，分享自 @SegmentFault \n\n像上面这样，需要查询300005次索引节点，查询300005次聚簇索引的数据，最后再将结果过滤掉前300000条，取出最后5条。MySQL耗费了大量随机I/O在查询聚簇索引的数据上，而有300000次随机I/O查询到的数...全文： http://m.weibo.cn/2036070420/4153336640861871 ';
-const name = 'Easy';
-const screenName = 'Easy';
+type Props = {
+  classes: Object,
+  text: string,
+  name: string,
+  screen_name: string,
+  profile_image_url: string
+};
 
-class Card extends Component {
+class Card extends Component<Props> {
   render() {
     const { classes } = this.props;
+    const { text, name, screen_name, profile_image_url } = this.props;
     return (
       <div className={classes.root}>
         <div className={classes.container} elevation="1">
           <div className={classes.avatar}>
-            <Link to={`/${screenName}`}>
-              <Avatar
-                alt="avatar"
-                src="http://tva2.sinaimg.cn/crop.0.0.440.440.50/4242e8adjw8elz58g3kyvj20c80c8myg.jpg"
-              />
+            <Link to={`/${screen_name}`}>
+              <Avatar alt="avatar" src={profile_image_url} />
             </Link>
           </div>
           <div className={classes.content}>
             <div className={classes.contentHeader}>
-              <Link to={screenName} className={classes.name}>
+              <Link to={screen_name} className={classes.name}>
                 {name}
               </Link>
               <GradeIcon />
-              <Link to={screenName} className={classes.screenName}>
-                @{screenName}
+              <Link to={screen_name} className={classes.screenName}>
+                @{screen_name}
               </Link>
             </div>
+            {/* 注意xss */}
             <div dangerouslySetInnerHTML={{ __html: parseTweet(text) }} />
             <ActionBar />
           </div>

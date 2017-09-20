@@ -7,7 +7,7 @@ const styles = {
   root: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   avatar: {
     width: '1.5em',
@@ -17,17 +17,19 @@ const styles = {
 };
 
 type Props = {
-  classes: Object
+  classes: Object,
+  profile_image_url: string
 };
 
 class Header extends Component<Props> {
   render() {
     const { classes } = this.props;
+    const { profile_image_url } = this.props;
     return (
       <div className={classes.root}>
         <Avatar
           alt="avatar"
-          src="http://tva2.sinaimg.cn/crop.0.0.440.440.50/4242e8adjw8elz58g3kyvj20c80c8myg.jpg"
+          src={profile_image_url}
           className={classes.avatar}
         />
         <Typography type="title">主页</Typography>
