@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { load } from '../../redux/modules/entities';
+import { tweetCardInfoSelector } from './selector';
 
 type Props = {
   load: Function,
@@ -35,7 +36,7 @@ class Home extends Component<Props> {
 }
 
 const mapStateTopProps = state => ({
-  tweets: state.entities.tweets
+  // tweets: tweetCardInfoSelector(state)
 });
 
 const mapActionToProps = dispatch => ({

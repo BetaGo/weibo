@@ -1,13 +1,31 @@
+// @flow
 import { createSelector } from 'reselect';
 
-const tweetsSelector = state => state.entities.tweets;
-const usersSelector = state => state.entities.users;
+const tweetsSelector = (state: Object) => state.entities.tweets;
+const retweetSelector = (state: Object) => state.entities.retweet;
+const usersSelector = (state: Object) => state.entities.users;
+const timelineSelector = (state: Object) => state.entities.statuses;
 
-const tweetCardInfoSelector = createSelector(
+export const tweetCardInfoSelector = createSelector(
   tweetsSelector,
+  retweetSelector,
   usersSelector,
-  (tweets, users) => {
-    let cardInfo = [];
-    
-  }
-)
+  timelineSelector,
+  (tweets: Object, retweets: Object, users: Object, timeline: Array<number>) =>
+    timeline.map(value => {
+      let tweet = tweets[value];
+      let user = users[tweet.user];
+      // let retweet = tweet.retweet ? retweets[tweet.retweet] : null;
+      const { text, reposts_count, comments_count, attitudes_count } = tweet;
+      const { name, screen_name, profile_image_url } = user;
+      return {
+        text,
+        name,
+        screen_name,
+        profile_image_url,
+        reposts_count,
+        comments_count,
+        attitudes_count
+      };
+    })
+);
