@@ -10,6 +10,7 @@ const initialState = {
   users: {},
   tweets: {},
   retweet: {},
+  statuses: [],
   error: {},
   fetchStatus: 'loading'
 };

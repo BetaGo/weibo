@@ -3,12 +3,15 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import Card from '../../components/Home/Card';
+
 import { load } from '../../redux/modules/entities';
 import { tweetCardInfoSelector } from './selector';
 
 type Props = {
   load: Function,
-  fetchStatus: string
+  fetchStatus: string,
+  tweets: Array<Object>
 };
 
 class Home extends Component<Props> {
@@ -21,22 +24,23 @@ class Home extends Component<Props> {
       return <div>加载中</div>;
     } else {
       const { tweets } = this.props;
-      
+      return tweets.map(tweet => <Card {...tweet} />);
     }
-  }
+  };
 
   render() {
     const { fetchStatus, tweets } = this.props;
     return (
       <div>
-        hahahaha
+        {this.getHome()}
       </div>
     );
   }
 }
 
 const mapStateTopProps = state => ({
-  // tweets: tweetCardInfoSelector(state)
+  fetchStatus: state.entities.fetchStatus,
+  tweets: tweetCardInfoSelector(state)
 });
 
 const mapActionToProps = dispatch => ({
