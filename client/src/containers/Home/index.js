@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import { load } from '../../redux/modules/entities';
 
 type Props = {
-  load: Function
+  load: Function,
+  fetchStatus: string
 };
 
 class Home extends Component<Props> {
@@ -14,8 +15,17 @@ class Home extends Component<Props> {
     this.props.load();
   }
 
+  getHome = () => {
+    if (this.props.fetchStatus !== 'loaded') {
+      return <div>加载中</div>;
+    } else {
+      const { tweets } = this.props;
+      
+    }
+  }
+
   render() {
-    // const { fetchStatus, tweets } = this.props;
+    const { fetchStatus, tweets } = this.props;
     return (
       <div>
         hahahaha
@@ -24,8 +34,12 @@ class Home extends Component<Props> {
   }
 }
 
+const mapStateTopProps = state => ({
+  tweets: state.entities.tweets
+});
+
 const mapActionToProps = dispatch => ({
   load: bindActionCreators(load, dispatch)
 });
 
-export default connect(() => {}, mapActionToProps)(Home);
+export default connect(mapStateTopProps, mapActionToProps)(Home);

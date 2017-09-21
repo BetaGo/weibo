@@ -26,7 +26,8 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         fetchStatus: 'loaded',
-        ...action.payload
+        ...action.payload.entities,
+        ...action.payload.result
       };
     }
     case LOAD_FAIL: {
@@ -53,7 +54,7 @@ export function load() {
       if (homeTimeline) {
         dispatch({
           type: LOAD_SUCCESS,
-          payload: normalize(homeTimeline.data, timeline).entities
+          payload: normalize(homeTimeline.data, timeline)
         });
       } else {
         dispatch({

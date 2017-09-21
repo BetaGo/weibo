@@ -7,4 +7,7 @@
 
 ServiceWorkers 与后端做数据同步
 
-## 
+## react:
+  normalizr 处理数据,
+  reselector 优化selector
+
