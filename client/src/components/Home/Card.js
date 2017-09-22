@@ -12,7 +12,7 @@ import { parseTweet } from '../../utils/parseTweet';
 
 const styles = {
   root: {
-    margin: '2px 0'
+    margin: '1px 0'
   },
   container: {
     display: 'flex',
@@ -70,7 +70,7 @@ class Card extends Component<Props> {
     } = this.props;
     const actionBarProps = { reposts_count, comments_count, attitudes_count };
     return (
-      <div className={classes.root}>
+      <Paper elevation={1} className={classes.root}>
         <div className={classes.container} elevation="1">
           <div className={classes.avatar}>
             <Link to={`/${screen_name}`}>
@@ -92,7 +92,7 @@ class Card extends Component<Props> {
             <ActionBar {...actionBarProps} />
           </div>
         </div>
-      </div>
+      </Paper>
     );
   }
 }
