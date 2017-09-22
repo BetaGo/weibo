@@ -25,7 +25,8 @@ const styles = {
   },
   content: {
     margin: '0 0.3em',
-    flexGrow: '7'
+    flexGrow: '7',
+    width: '100%'
   },
   contentHeader: {
     display: 'flex',

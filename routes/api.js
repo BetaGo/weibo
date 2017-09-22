@@ -4,6 +4,7 @@ const User = require('../models/user');
 // APIs
 const getHomeTimeline = require('../weiboAPI/getHomeTimeline');
 const getUserInfo = require('../weiboAPI/getUserInfo');
+const getEmotions = require('../weiboAPI/getEmotions');
 
 const router = express.Router();
 
@@ -38,6 +39,7 @@ function routerFactoryGet(path, apiFunc) {
 
 routerFactoryGet('/home_timeline', getHomeTimeline);
 routerFactoryGet('/user_info', getUserInfo);
+routerFactoryGet('/emotions', getEmotions);
 
 router.get('/token', async (req, res, next) => {
   if (!req.session.user) {
