@@ -5,18 +5,18 @@ import { connect } from 'react-redux';
 
 import Card from '../../components/Home/Card';
 
-import { load } from '../../redux/modules/entities';
+import { loadHomeTimeline } from '../../redux/modules/entities';
 import { tweetCardInfoSelector } from './selector';
 
 type Props = {
-  load: Function,
+  loadHomeTimeline: Function,
   fetchStatus: string,
   tweets: Array<Object>
 };
 
 class Home extends Component<Props> {
   componentDidMount() {
-    this.props.load();
+    this.props.loadHomeTimeline();
   }
 
   getHome = () => {
@@ -44,7 +44,7 @@ const mapStateTopProps = state => ({
 });
 
 const mapActionToProps = dispatch => ({
-  load: bindActionCreators(load, dispatch)
+  loadHomeTimeline: bindActionCreators(loadHomeTimeline, dispatch)
 });
 
 export default connect(mapStateTopProps, mapActionToProps)(Home);

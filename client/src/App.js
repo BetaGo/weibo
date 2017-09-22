@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
 import store, { history } from './redux/configStore';
-import Layout from './layout';
+import Layout from './containers/layout';
 
 const theme = createMuiTheme();
 

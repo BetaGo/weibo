@@ -1,16 +1,10 @@
 import axios from 'axios';
-import { normalize } from 'normalizr';
-import { timeline } from '../schema';
 
-const LOAD = 'weibo/tweets/LOAD';
-const LOAD_SUCCESS = 'weibo/tweets/LOAD_SUCCESS';
-const LOAD_FAIL = 'weibo/tweets/LOAD_FAIL';
+const LOAD = 'weibo/session/LOAD';
+const LOAD_SUCCESS = 'weibo/session/LOAD_SUCCESS';
+const LOAD_FAIL = 'weibo/session/LOAD_FAIL';
 
 const initialState = {
-  users: {},
-  tweets: {},
-  retweet: {},
-  statuses: [],
   error: {},
   fetchStatus: 'loading'
 };
@@ -23,14 +17,15 @@ export default function reducer(state = initialState, action = {}) {
         fetchStatus: 'loading'
       };
     }
+
     case LOAD_SUCCESS: {
       return {
         ...state,
         fetchStatus: 'loaded',
-        ...action.payload.entities,
-        ...action.payload.result
+        ...action.payload
       };
     }
+
     case LOAD_FAIL: {
       return {
         ...state,
@@ -38,24 +33,25 @@ export default function reducer(state = initialState, action = {}) {
         error: action.payload
       };
     }
+
     default:
       return state;
   }
 }
 
-export function loadHomeTimeline() {
+export function loadUserInfo() {
   return async dispatch => {
     dispatch({ type: LOAD });
     try {
-      const homeTimeline = await axios.get(
-        'http://192.168.56.20:8080/api/home_timeline',
+      const userInfo = await axios.get(
+        'http://192.168.56.20:8080/api/user_info',
         { withCredentials: true }
       );
 
-      if (homeTimeline) {
+      if (userInfo) {
         dispatch({
           type: LOAD_SUCCESS,
-          payload: normalize(homeTimeline.data, timeline)
+          payload: userInfo.data
         });
       } else {
         dispatch({

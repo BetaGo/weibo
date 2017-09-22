@@ -8,7 +8,7 @@ const getEmotions = require('../weiboAPI/getEmotions');
 
 const router = express.Router();
 
-function routerFactoryGet(path, apiFunc) {
+function routerFactoryGet(path, apiFunc, cb) {
   router.get(path, async (req, res, next) => {
     if (!req.session.user) {
       res.sendStatus(401);
@@ -25,7 +25,8 @@ function routerFactoryGet(path, apiFunc) {
           });
         } else {
           const { access_token } = userData;
-          const { query } = req;
+          let { query } = req;
+          query = cb ? cb(query, uid) : query;
           console.log({ ...query });
           const result = await apiFunc({ access_token, ...query });
           res.json(result.data);
@@ -38,7 +39,12 @@ function routerFactoryGet(path, apiFunc) {
 }
 
 routerFactoryGet('/home_timeline', getHomeTimeline);
-routerFactoryGet('/user_info', getUserInfo);
+routerFactoryGet('/user_info', getUserInfo, (query, uid) => {
+  if (!query.uid && !query.screen_name) {
+    return { uid, ...query };
+  }
+  return query;
+});
 routerFactoryGet('/emotions', getEmotions);
 
 router.get('/token', async (req, res, next) => {
