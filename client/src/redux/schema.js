@@ -14,7 +14,7 @@ export const timeline = new schema.Object({
 });
 
 // emotion
-export const emotion = new schema.Entity('emotions', {
-  idAttribute: 'value'
+export const emotion = new schema.Entity('emotions', undefined, {
+  idAttribute: emo => emo.value.slice(1, -1)
 });
 export const emotionList = new schema.Array(emotion);

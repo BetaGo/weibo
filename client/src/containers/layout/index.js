@@ -25,7 +25,7 @@ class Layout extends Component {
 }
 
 export default connect(
-  () => {},
+  undefined,
   dispatch => ({
     loadEmotions: bindActionCreators(loadEmotions, dispatch),
     loadUserInfo: bindActionCreators(loadUserInfo, dispatch)

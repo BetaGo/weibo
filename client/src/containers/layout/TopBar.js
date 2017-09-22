@@ -9,7 +9,7 @@ import SearchIcon from 'material-ui-icons/Search';
 import NotificationsIcon from 'material-ui-icons/Notifications';
 import MessageIcon from 'material-ui-icons/Message';
 
-import HomeHeader from '../../components/Home/Header';
+import HomeHeader from '../Home/Header';
 
 class componentName extends Component {
   state = {

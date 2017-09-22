@@ -53,7 +53,8 @@ type Props = {
   profile_image_url: string,
   reposts_count: number,
   comments_count: number,
-  attitudes_count: number
+  attitudes_count: number,
+  emotions: Object
 };
 
 class Card extends Component<Props> {
@@ -66,7 +67,8 @@ class Card extends Component<Props> {
       profile_image_url,
       reposts_count,
       comments_count,
-      attitudes_count
+      attitudes_count,
+      emotions
     } = this.props;
     const actionBarProps = { reposts_count, comments_count, attitudes_count };
     return (
@@ -88,7 +90,9 @@ class Card extends Component<Props> {
               </Link>
             </div>
             {/* 注意xss */}
-            <div dangerouslySetInnerHTML={{ __html: parseTweet(text) }} />
+            <div
+              dangerouslySetInnerHTML={{ __html: parseTweet(text, emotions) }}
+            />
             <ActionBar {...actionBarProps} />
           </div>
         </div>

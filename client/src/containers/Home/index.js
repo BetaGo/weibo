@@ -11,7 +11,8 @@ import { tweetCardInfoSelector } from './selector';
 type Props = {
   loadHomeTimeline: Function,
   fetchStatus: string,
-  tweets: Array<Object>
+  tweets: Array<Object>,
+  emotions: Object
 };
 
 class Home extends Component<Props> {
@@ -23,8 +24,10 @@ class Home extends Component<Props> {
     if (this.props.fetchStatus !== 'loaded') {
       return <div>加载中</div>;
     } else {
-      const { tweets } = this.props;
-      return tweets.map(tweet => <Card {...tweet} />);
+      const { tweets, emotions } = this.props;
+      return tweets.map(tweet => (
+        <Card key={tweet.id} {...tweet} emotions={emotions} />
+      ));
     }
   };
 
@@ -39,6 +42,7 @@ class Home extends Component<Props> {
 }
 
 const mapStateTopProps = state => ({
+  emotions: state.emotions,
   fetchStatus: state.entities.fetchStatus,
   tweets: tweetCardInfoSelector(state)
 });

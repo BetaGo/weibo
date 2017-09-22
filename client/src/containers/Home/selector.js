@@ -16,9 +16,16 @@ export const tweetCardInfoSelector = createSelector(
       let tweet = tweets[value];
       let user = users[tweet.user];
       // let retweet = tweet.retweet ? retweets[tweet.retweet] : null;
-      const { text, reposts_count, comments_count, attitudes_count } = tweet;
+      const {
+        text,
+        reposts_count,
+        comments_count,
+        attitudes_count,
+        id
+      } = tweet;
       const { name, screen_name, profile_image_url } = user;
       return {
+        id,
         text,
         name,
         screen_name,
