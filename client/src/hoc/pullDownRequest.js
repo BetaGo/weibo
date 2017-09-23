@@ -37,8 +37,6 @@ export default function pullDownRequest(requestAction: Function) {
       };
 
       touchStartY: number;
-      touchMoveY: number;
-      touchEndY: number;
 
       ontouchstart = (e: TouchEvent) => {
         this.touchStartY = e.touches[0].pageY;
@@ -71,28 +69,42 @@ export default function pullDownRequest(requestAction: Function) {
       render() {
         const { classes } = this.props;
         return (
-          <Motion
-            style={{
-              x: spring(this.state.top, { stiffness: 200, damping: 20 })
-            }}
+          // <Motion
+          //   style={{
+          //     x: spring(this.state.top, { stiffness: 200, damping: 20 })
+          //   }}
+          // >
+          //   {({ x }) => (
+          //     <div
+          //       className={classes.root}
+          //       style={{ top: x }}
+          //       onTouchStart={this.ontouchstart}
+          //       onTouchMove={this.ontouchmove}
+          //       onTouchEnd={this.ontouchend}
+          //     >
+          //       <div className={classes.pointerContainer}>
+          //         <i className={classes.pointer}>
+          //           {this.state.top > 50 ? <ArrowUpIcon /> : <ArrowDownIcon />}
+          //         </i>
+          //       </div>
+          //       <BaseComponent {...this.props} />
+          //     </div>
+          //   )}
+          // </Motion>
+          <div
+            className={classes.root}
+            style={{ transform: `translate3d(0,${this.state.top}px, 0)` }}
+            onTouchStart={this.ontouchstart}
+            onTouchMove={this.ontouchmove}
+            onTouchEnd={this.ontouchend}
           >
-            {({ x }) => (
-              <div
-                className={classes.root}
-                style={{ top: x }}
-                onTouchStart={this.ontouchstart}
-                onTouchMove={this.ontouchmove}
-                onTouchEnd={this.ontouchend}
-              >
-                <div className={classes.pointerContainer}>
-                  <i className={classes.pointer}>
-                    {this.state.top > 50 ? <ArrowUpIcon /> : <ArrowDownIcon />}
-                  </i>
-                </div>
-                <BaseComponent {...this.props} />
-              </div>
-            )}
-          </Motion>
+            <div className={classes.pointerContainer}>
+              <i className={classes.pointer}>
+                {this.state.top > 50 ? <ArrowUpIcon /> : <ArrowDownIcon />}
+              </i>
+            </div>
+            <BaseComponent {...this.props} />
+          </div>
         );
       }
     }

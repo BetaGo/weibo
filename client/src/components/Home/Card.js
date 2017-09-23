@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
@@ -57,7 +57,7 @@ type Props = {
   emotions: Object
 };
 
-class Card extends Component<Props> {
+class Card extends PureComponent<Props> {
   render() {
     const { classes } = this.props;
     const {

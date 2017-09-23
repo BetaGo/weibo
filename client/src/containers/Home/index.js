@@ -62,7 +62,7 @@ const mapActionToProps = dispatch => ({
   loadSinceTimeline: bindActionCreators(loadSinceTimeline, dispatch)
 });
 
-const HomeWithPullDownRequest = pullDownRequest(() => {})(Home);
+const HomeWithPullDownRequest = pullDownRequest(() => { console.log('pull down~') })(Home);
 
 // export default connect(mapStateTopProps, mapActionToProps)(Home);
 export default connect(mapStateTopProps, mapActionToProps)(
