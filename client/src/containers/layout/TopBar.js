@@ -11,7 +11,7 @@ import MessageIcon from 'material-ui-icons/Message';
 
 import HomeHeader from '../Home/Header';
 
-class componentName extends Component {
+class componentName extends Component<any> {
   state = {
     value: 0,
   };

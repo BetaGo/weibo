@@ -11,8 +11,14 @@ export const tweetCardInfoSelector = createSelector(
   retweetSelector,
   usersSelector,
   timelineSelector,
-  (tweets: Object, retweets: Object, users: Object, timeline: Array<number>) =>
-    timeline.map(value => {
+  (
+    tweets: Object,
+    retweets: Object,
+    users: Object,
+    timeline: Array<number>
+  ) => {
+    const sortedTimeline = timeline.sort((a, b) => b - a);
+    return sortedTimeline.map(value => {
       let tweet = tweets[value];
       let user = users[tweet.user];
       // let retweet = tweet.retweet ? retweets[tweet.retweet] : null;
@@ -34,5 +40,6 @@ export const tweetCardInfoSelector = createSelector(
         comments_count,
         attitudes_count
       };
-    })
+    });
+  }
 );

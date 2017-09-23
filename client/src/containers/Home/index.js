@@ -2,10 +2,15 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import pullDownRequest from '../../hoc/pullDownRequest';
 
 import Card from '../../components/Home/Card';
 
-import { loadHomeTimeline } from '../../redux/modules/entities';
+import {
+  loadHomeTimeline,
+  loadNextTimeline,
+  loadSinceTimeline
+} from '../../redux/modules/entities';
 import { tweetCardInfoSelector } from './selector';
 
 type Props = {
@@ -21,8 +26,10 @@ class Home extends Component<Props> {
   }
 
   getHome = () => {
-    if (this.props.fetchStatus !== 'loaded') {
+    if (this.props.fetchStatus === 'loading') {
       return <div>加载中</div>;
+    } else if (this.props.fetchStatus === 'error') {
+      return <div>出错啦o(╥﹏╥)o</div>;
     } else {
       const { tweets, emotions } = this.props;
       return tweets.map(tweet => (
@@ -44,11 +51,20 @@ class Home extends Component<Props> {
 const mapStateTopProps = state => ({
   emotions: state.emotions,
   fetchStatus: state.entities.fetchStatus,
+  max_id: state.entities.max_id,
+  since_id: state.entities.since_id,
   tweets: tweetCardInfoSelector(state)
 });
 
 const mapActionToProps = dispatch => ({
-  loadHomeTimeline: bindActionCreators(loadHomeTimeline, dispatch)
+  loadHomeTimeline: bindActionCreators(loadHomeTimeline, dispatch),
+  loadNextTimeline: bindActionCreators(loadNextTimeline, dispatch),
+  loadSinceTimeline: bindActionCreators(loadSinceTimeline, dispatch)
 });
 
-export default connect(mapStateTopProps, mapActionToProps)(Home);
+const HomeWithPullDownRequest = pullDownRequest(() => {})(Home);
+
+// export default connect(mapStateTopProps, mapActionToProps)(Home);
+export default connect(mapStateTopProps, mapActionToProps)(
+  HomeWithPullDownRequest
+);
