@@ -1,7 +1,7 @@
-const express = require('express');
-const axios = require('axios');
-const secret = require('../secret/weibo');
-const User = require('../models/user');
+import * as express from 'express';
+import axios from 'axios';
+import * as secret from '../secret/weibo';
+import User from '../models/user';
 
 const router = express.Router();
 
@@ -24,24 +24,24 @@ router.get('/weibo', async (req, res, next) => {
       },
     };
     try {
-      let result = await axios(weiboConfig);
+      const result = await axios(weiboConfig);
       // console.log(result.data);
-      result = result.data;
-      if (result.error) {
-        console.log(`授权出错: ${result.error}`);
+      const resultData = result.data;
+      if (resultData.error) {
+        console.log(`授权出错: ${resultData.error}`);
         next();
       }
-      let user = await User.findOne({ uid: result.uid }).exec();
+      let user = await User.findOne({ uid: resultData.uid }).exec();
       if (!user) {
-        user = new User(result);
+        user = new User(resultData);
         await user.save();
-        req.session.user = result;
+        req.session.user = resultData;
         console.log('存储 access_token 成功');
         res.redirect('/home');
       } else {
-        User.update({ uid: result.uid }, result).exec();
-        result.access_token = null;
-        req.session.user = result;
+        User.update({ uid: resultData.uid }, resultData).exec();
+        resultData.access_token = null;
+        req.session.user = resultData;
         console.log('更新 access_token 成功');
         res.redirect('/home');
       }
@@ -53,4 +53,4 @@ router.get('/weibo', async (req, res, next) => {
   }
 });
 
-module.exports = router;
+export default router;

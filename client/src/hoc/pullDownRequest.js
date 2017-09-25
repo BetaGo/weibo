@@ -39,30 +39,43 @@ export default function pullDownRequest(requestAction: Function) {
       touchStartY: number;
 
       ontouchstart = (e: TouchEvent) => {
-        this.touchStartY = e.touches[0].pageY;
+        if (e.target.scrollTop === 0) {
+          e.preventDefault();
+          e.stopPropagation();
+          this.touchStartY = e.touches[0].pageY;
+        }
       };
 
       ontouchmove = (e: TouchEvent) => {
-        const curTouchY = e.touches[0].pageY;
-        const deltaY = curTouchY - this.touchStartY;
-        const top = deltaY / 2;
-        this.setState({
-          top
-        });
+        if (this.touchStartY) {
+          e.preventDefault();
+          e.stopPropagation();
+          const curTouchY = e.touches[0].pageY;
+          const deltaY = curTouchY - this.touchStartY;
+          const top = deltaY / 2;
+          this.setState({
+            top
+          });
+        }
       };
 
       ontouchend = (e: TouchEvent) => {
-        const curTouchY = e.changedTouches[0].pageY;
-        const deltaY = curTouchY - this.touchStartY;
-        if (deltaY > 50) {
-          requestAction();
-          this.setState({
-            top: 0
-          });
-        } else {
-          this.setState({
-            top: 0
-          });
+        if (this.touchStartY) {
+          e.preventDefault();
+          e.stopPropagation();
+          const curTouchY = e.changedTouches[0].pageY;
+          const deltaY = curTouchY - this.touchStartY;
+          if (deltaY > 50) {
+            requestAction();
+            this.setState({
+              top: 0
+            });
+          } else {
+            this.setState({
+              top: 0
+            });
+          }
+          this.touchStartY = null;
         }
       };
 

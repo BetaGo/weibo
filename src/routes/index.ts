@@ -1,5 +1,5 @@
-const express = require('express');
-const secret = require('../secret/weibo');
+import * as express from 'express';
+import * as secret from '../secret/weibo';
 
 const router = express.Router();
 
@@ -15,4 +15,4 @@ router.get('/', (req, res, next) => {
   );
 });
 
-module.exports = router;
+export default router;

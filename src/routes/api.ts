@@ -1,14 +1,13 @@
-const express = require('express');
-const User = require('../models/user');
+import * as express from 'express';
 
-// APIs
-const getHomeTimeline = require('../weiboAPI/getHomeTimeline');
-const getUserInfo = require('../weiboAPI/getUserInfo');
-const getEmotions = require('../weiboAPI/getEmotions');
+import { default as User, UserModel } from '../models/user';
+import getHomeTimeline from '../weiboAPI/getHomeTimeline';
+import { default as getUserInfo, UserInfoConfig } from '../weiboAPI/getUserInfo';
+import getEmotions from '../weiboAPI/getEmotions';
 
 const router = express.Router();
 
-function routerFactoryGet(path, apiFunc, cb) {
+function routerFactoryGet(path: string, apiFunc: Function, cb?:Function) {
   router.get(path, async (req, res, next) => {
     if (!req.session.user) {
       res.sendStatus(401);
@@ -18,7 +17,7 @@ function routerFactoryGet(path, apiFunc, cb) {
     } else {
       const { uid } = req.session.user;
       try {
-        const userData = await User.findOne({ uid }).exec();
+        const userData: any = await User.findOne({ uid }).exec();
         if (!userData) {
           res.json({
             error: '未知错误',
@@ -26,7 +25,7 @@ function routerFactoryGet(path, apiFunc, cb) {
         } else {
           const { access_token } = userData;
           let { query } = req;
-          query = cb ? cb(query, uid) : query;
+          query = cb ? cb(query, access_token, uid) : query;
           console.log({ ...query });
           const result = await apiFunc({ access_token, ...query });
           res.json(result.data);
@@ -39,7 +38,7 @@ function routerFactoryGet(path, apiFunc, cb) {
 }
 
 routerFactoryGet('/home_timeline', getHomeTimeline);
-routerFactoryGet('/user_info', getUserInfo, (query, uid) => {
+routerFactoryGet('/user_info', getUserInfo, (query:UserInfoConfig, uid: number) => {
   if (!query.uid && !query.screen_name) {
     return { uid, ...query };
   }
@@ -55,7 +54,7 @@ router.get('/token', async (req, res, next) => {
   } else {
     const { uid } = req.session.user;
     try {
-      const userData = await User.findOne({ uid }).exec();
+      const userData: any = await User.findOne({ uid }).exec();
       if (!userData) {
         res.json({
           error: '未知错误',
@@ -120,4 +119,4 @@ router.get('/user_info', async (req, res, next) => {
 });
 */
 
-module.exports = router;
+export default router;
