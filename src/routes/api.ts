@@ -25,7 +25,7 @@ function routerFactoryGet(path: string, apiFunc: Function, cb?:Function) {
         } else {
           const { access_token } = userData;
           let { query } = req;
-          query = cb ? cb(query, access_token, uid) : query;
+          query = cb ? cb(query, uid) : query;
           console.log({ ...query });
           const result = await apiFunc({ access_token, ...query });
           res.json(result.data);
