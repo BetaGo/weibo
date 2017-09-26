@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+// API
+const API = 'http://127.0.0.1:8080/api/user_info';
+
 const LOAD = 'weibo/session/LOAD';
 const LOAD_SUCCESS = 'weibo/session/LOAD_SUCCESS';
 const LOAD_FAIL = 'weibo/session/LOAD_FAIL';
@@ -43,10 +46,7 @@ export function loadUserInfo() {
   return async dispatch => {
     dispatch({ type: LOAD });
     try {
-      const userInfo = await axios.get(
-        'http://192.168.56.20:8080/api/user_info',
-        { withCredentials: true }
-      );
+      const userInfo = await axios.get(API, { withCredentials: true });
 
       if (userInfo) {
         dispatch({

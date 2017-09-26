@@ -2,6 +2,9 @@ import axios from 'axios';
 import { normalize } from 'normalizr';
 import { emotionList } from '../schema';
 
+// API
+const API = 'http://127.0.0.1:8080/api/emotions';
+
 const LOAD = 'weibo/emotions/LOAD';
 const LOAD_SUCCESS = 'weibo/emotions/LOAD_SUCCESS';
 const LOAD_FAIL = 'weibo/emotions/LOAD_FAIL';
@@ -47,10 +50,7 @@ export function loadEmotions() {
   return async dispatch => {
     dispatch({ type: LOAD });
     try {
-      const emotions = await axios.get(
-        'http://192.168.56.20:8080/api/emotions',
-        { withCredentials: true }
-      );
+      const emotions = await axios.get(API, { withCredentials: true });
 
       if (emotions) {
         dispatch({

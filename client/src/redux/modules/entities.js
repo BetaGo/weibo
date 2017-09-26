@@ -3,7 +3,7 @@ import { normalize } from 'normalizr';
 import { timeline } from '../schema';
 
 // API
-const HOME_TIMELINE = 'http://192.168.56.20:8080/api/home_timeline';
+const HOME_TIMELINE = 'http://127.0.0.1:8080/api/home_timeline';
 
 // action
 const LOAD = 'weibo/tweets/LOAD';

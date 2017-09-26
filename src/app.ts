@@ -24,7 +24,7 @@ import api from './routes/api';
 const app = express();
 
 // 链接到数据库
-mongoose.connect(mongoSecret.mongodb);
+mongoose.connect(mongoSecret.mongodb, { useMongoClient: true });
 mongoose.connection.on("error", () => {
   console.log("MongoDB connection error. Please make sure MongoDB is running.");
   process.exit();
@@ -44,8 +44,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // allow cors
 app.use((req, res, next) => {
+  const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000'];
+  const origin:any = req.headers.origin;
+  if (allowedOrigins.indexOf(origin) > -1) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
   res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
