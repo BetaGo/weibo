@@ -2,8 +2,8 @@ import axios from 'axios';
 
 export type EmotionsConfig = {
   access_token: string, // 采用OAuth授权方式为必填参数，OAuth授权后获得。
-  type?: string, // false string 表情类别，face：普通表情、ani：魔法表情、cartoon：动漫表情，默认为face。
-  language?: string, // false string 语言类别，cnname：简体、twname：繁体，默认为cnname。
+  type?: 'face' | 'ani' | 'cartoon', // false string 表情类别，face：普通表情、ani：魔法表情、cartoon：动漫表情，默认为face。
+  language?: 'cnname' | 'twname', // false string 语言类别，cnname：简体、twname：繁体，默认为cnname。
 };
 
 /**
