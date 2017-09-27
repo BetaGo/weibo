@@ -28,10 +28,35 @@ type LOAD_SINCE = typeof LOAD_SINCE;
 type LOAD_SINCE_SUCCESS = typeof LOAD_SINCE_SUCCESS;
 type LOAD_SINCE_FAIL = typeof LOAD_SINCE_FAIL;
 
+export interface Tweet {
+  id: number;
+  text: string;
+  textLength: number;
+  user: number;
+  reposts_count: number;
+  comments_count: number;
+  attitudes_count: number;
+}
+
+export interface Tweets {
+  [propName: string]: Tweet;
+}
+
+export interface User {
+  id: number;
+  screen_name: string;
+  name: string;
+  profile_image_url: string;
+
+}
+
+export interface Users {
+  [propName: string]: User;
+}
 export interface TweetsPayload {
   entities: {
     users: {};
-    tweets: {};
+    tweets: Tweets;
     retweet: {};
   };
   result: {

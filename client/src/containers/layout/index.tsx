@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route } from 'react-router';
 import { bindActionCreators } from 'redux';
-import { connect, Dispatch, DispatchProp } from 'react-redux';
+import { connect, Dispatch } from 'react-redux';
 
 import TopBar from './TopBar';
 import Home from '../Home';
@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch: Dispatch<EmotionsAction | SessionAction>) 
   loadUserInfo: bindActionCreators(loadUserInfo, dispatch),
 });
 
-class Layout extends React.Component<LayoutProps & DispatchProp<{}>, {}> {
+class Layout extends React.Component<LayoutProps> {
   componentDidMount() {
     this.props.loadEmotions();
     this.props.loadUserInfo();

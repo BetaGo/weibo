@@ -12,14 +12,17 @@ import {
   EntitiesAction,
 } from '../../redux/modules/entities';
 import { StoreState } from '../../types';
+import { EmotionsState } from '../../redux/modules/emotions';
 
-import { tweetCardInfoSelector } from './selector';
+import { tweetCardInfoSelector, TweetCardData } from './selector';
 
 type Props = {
   loadHomeTimeline: () => void,
   fetchStatus: string,
-  tweets: Array<Object>,
-  emotions: Object
+  tweets: Array<TweetCardData>,
+  emotions: EmotionsState,
+  max_id: number,
+  since_id: number,
 };
 
 class Home extends React.Component<Props> {
@@ -34,9 +37,10 @@ class Home extends React.Component<Props> {
       return <div>出错啦o(╥﹏╥)o</div>;
     } else {
       const { tweets, emotions } = this.props;
-      return tweets.map(tweet => (
-        <Card key={tweet.id} {...tweet} emotions={emotions} />
-      ));
+      return tweets.map(tweet => {
+        const cardData = { ...tweet, emotions: emotions };
+        return  (<Card key={tweet.id} {...cardData} />);
+      });
     }
   }
 
@@ -65,6 +69,8 @@ const mapActionToProps = (dispatch: Dispatch<EntitiesAction>) => ({
 });
 
 const HomeWithPullDownRequest = pullDownRequest(() => { console.log('pull down~'); })(Home);
+// const enhancer= pullDownRequest(() => { console.log('pull down~'); });
+// const HomeWithPullDownRequest = enhancer()
 
 // export default connect(mapStateTopProps, mapActionToProps)(Home);
 export default connect(mapStateTopProps, mapActionToProps)(

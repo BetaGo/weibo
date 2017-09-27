@@ -30,8 +30,9 @@ type State = {
   top: number
 };
 
-export default function pullDownRequest(requestAction: Function) {
-  function enhance(BaseComponent: React.ComponentClass) {
+export default function pullDownRequest(requestAction: Function)
+  : (BaseComponent: React.ComponentClass) => React.ComponentClass {
+  function enhance(BaseComponent: React.ComponentClass): React.ComponentClass {
     class PullDownRequest extends Component<Props, State> {
       state = {
         top: 0
@@ -56,7 +57,7 @@ export default function pullDownRequest(requestAction: Function) {
             top
           });
         }
-      };
+      }
 
       ontouchend = (e: React.TouchEvent<HTMLDivElement>) => {
         if (this.touchStartY) {
@@ -76,7 +77,7 @@ export default function pullDownRequest(requestAction: Function) {
           }
           this.touchStartY = null;
         }
-      };
+      }
 
       render() {
         const { classes } = this.props;
