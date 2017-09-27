@@ -1,10 +1,11 @@
-// @flow
 import { createSelector } from 'reselect';
 
-const tweetsSelector = (state: Object) => state.entities.tweets;
-const retweetSelector = (state: Object) => state.entities.retweet;
-const usersSelector = (state: Object) => state.entities.users;
-const timelineSelector = (state: Object) => state.entities.statuses;
+import { StoreState } from '../../types';
+
+const tweetsSelector = (state: StoreState) => state.entities.tweets;
+const retweetSelector = (state: StoreState) => state.entities.retweet;
+const usersSelector = (state: StoreState) => state.entities.users;
+const timelineSelector = (state: StoreState) => state.entities.statuses;
 
 export const tweetCardInfoSelector = createSelector(
   tweetsSelector,
@@ -12,9 +13,9 @@ export const tweetCardInfoSelector = createSelector(
   usersSelector,
   timelineSelector,
   (
-    tweets: Object,
-    retweets: Object,
-    users: Object,
+    tweets: {},
+    retweets: {},
+    users: {},
     timeline: Array<number>
   ) => {
     const sortedTimeline = timeline.sort((a, b) => b - a);

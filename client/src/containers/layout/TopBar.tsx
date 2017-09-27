@@ -1,7 +1,5 @@
-// @flow
-import React, { Component } from 'react';
-import { Route, Link } from 'react-router';
-import { withStyles } from 'material-ui/styles';
+import * as React from 'react';
+import { Route } from 'react-router';
 import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import HomeIcon from 'material-ui-icons/Home';
@@ -11,14 +9,18 @@ import MessageIcon from 'material-ui-icons/Message';
 
 import HomeHeader from '../Home/Header';
 
-class componentName extends Component<any> {
+type State = {
+  value: number,
+};
+
+class TopBar extends React.Component<{}, State> {
   state = {
     value: 0,
   };
 
-  handleChange = (event, value) => {
+  handleChange = (event: React.ChangeEvent<{}>, value: any) => {
     this.setState({ value });
-  };
+  }
   render() {
     return (
       <Paper>
@@ -26,7 +28,7 @@ class componentName extends Component<any> {
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}
-          fullWidth
+          fullWidth={true}
           indicatorColor="primary"
           textColor="primary"
         >
@@ -40,4 +42,4 @@ class componentName extends Component<any> {
   }
 }
 
-export default componentName;
+export default TopBar;

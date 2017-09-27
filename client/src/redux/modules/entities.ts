@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { normalize } from 'normalizr';
+import { Dispatch } from 'react-redux';
 import { timeline } from '../schema';
 
 // API
 const HOME_TIMELINE = 'http://127.0.0.1:8080/api/home_timeline';
 
-// action
+// constants
 const LOAD = 'weibo/tweets/LOAD';
 const LOAD_SUCCESS = 'weibo/tweets/LOAD_SUCCESS';
 const LOAD_FAIL = 'weibo/tweets/LOAD_FAIL';
@@ -16,16 +17,92 @@ const LOAD_SINCE = 'weibo/tweets/LOAD_SINCE';
 const LOAD_SINCE_SUCCESS = 'weibo/tweets/LOAD_SINCE_SUCCESS';
 const LOAD_SINCE_FAIL = 'weibo/tweets/LOAD_SINCE_FAIL';
 
+// types
+type LOAD = typeof LOAD;
+type LOAD_SUCCESS = typeof LOAD_SUCCESS;
+type LOAD_FAIL = typeof LOAD_FAIL;
+type LOAD_NEXT = typeof LOAD_NEXT;
+type LOAD_NEXT_SUCCESS = typeof LOAD_NEXT_SUCCESS;
+type LOAD_NEXT_FAIL = typeof LOAD_NEXT_FAIL;
+type LOAD_SINCE = typeof LOAD_SINCE;
+type LOAD_SINCE_SUCCESS = typeof LOAD_SINCE_SUCCESS;
+type LOAD_SINCE_FAIL = typeof LOAD_SINCE_FAIL;
+
+export interface TweetsPayload {
+  entities: {
+    users: {};
+    tweets: {};
+    retweet: {};
+  };
+  result: {
+    statuses: Array<number>;
+    since_id: number;
+    max_id: number;
+  };
+}
+interface TweetsLoad {
+  type: LOAD;
+}
+interface TweetsLoadSuccess {
+  type: LOAD_SUCCESS;
+  payload: TweetsPayload;
+}
+interface TweetsLoadFail {
+  type: LOAD_FAIL;
+  payload: {};
+}
+
+interface SinceLoad {
+  type: LOAD_SINCE;
+}
+interface SinceLoadSuccess {
+  type: LOAD_SINCE_SUCCESS;
+  payload: TweetsPayload;
+}
+interface SinceLoadFail {
+  type: LOAD_SINCE_FAIL;
+  payload: {};
+}
+
+interface NextLoad {
+  type: LOAD_NEXT;
+}
+interface NextLoadSuccess {
+  type: LOAD_NEXT_SUCCESS;
+  payload: TweetsPayload;
+}
+interface NextLoadFail {
+  type: LOAD_NEXT_FAIL;
+  payload: {};
+}
+
+export type EntitiesAction = TweetsLoad | TweetsLoadSuccess | TweetsLoadFail |
+                      SinceLoad | SinceLoadSuccess | SinceLoadFail |
+                      NextLoad | NextLoadSuccess | NextLoadFail;
+
+export interface EntitiesState {
+  users: {};
+  tweets: {};
+  retweet: {};
+  statuses: Array<number>;
+  since_id: number;
+  max_id: number;
+  error: {};
+  fetchStatus: string;
+}
+
 const initialState = {
   users: {},
   tweets: {},
   retweet: {},
   statuses: [],
   error: {},
-  fetchStatus: 'loading'
+  fetchStatus: 'loading',
+  since_id: 0,
+  max_id: 0,
 };
 
-export default function reducer(state = initialState, action = {}) {
+export default function reducer(state: EntitiesState = initialState, action: EntitiesAction) {
   switch (action.type) {
     case LOAD: {
       return {
@@ -64,7 +141,7 @@ export default function reducer(state = initialState, action = {}) {
         users: { ...state.users, ...users },
         tweets: { ...state.tweets, ...tweets },
         retweet: { ...state.retweet, ...retweet },
-        statuses: [...new Set([...state.statuses, ...statuses])],
+        statuses: [...state.statuses, ...statuses].filter((value, index, arr) => arr.indexOf(value) !== index),
         max_id
       };
     }
@@ -90,7 +167,7 @@ export default function reducer(state = initialState, action = {}) {
         users: { ...state.users, ...users },
         tweets: { ...state.tweets, ...tweets },
         retweet: { ...state.retweet, ...retweet },
-        statuses: [...new Set([...state.statuses, ...statuses])],
+        statuses: [...state.statuses, ...statuses].filter((value, index, arr) => arr.indexOf(value) !== index),
         since_id
       };
     }
@@ -108,7 +185,7 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function loadHomeTimeline() {
-  return async dispatch => {
+  return async (dispatch: Dispatch<EntitiesAction>) => {
     dispatch({ type: LOAD });
     try {
       const homeTimeline = await axios.get(HOME_TIMELINE, {
@@ -135,14 +212,14 @@ export function loadHomeTimeline() {
   };
 }
 
-export function loadSinceTimeline(since_id) {
-  return async dispatch => {
+export function loadSinceTimeline(sinceId: number) {
+  return async (dispatch: Dispatch<EntitiesAction>) => {
     dispatch({ type: LOAD_SINCE });
     try {
       const sinceTimeline = await axios.get(HOME_TIMELINE, {
         withCredentials: true,
         params: {
-          since_id
+          since_id: sinceId
         }
       });
       if (sinceTimeline) {
@@ -160,14 +237,14 @@ export function loadSinceTimeline(since_id) {
   };
 }
 
-export function loadNextTimeline(max_id) {
-  return async dispatch => {
+export function loadNextTimeline(maxId: number) {
+  return async (dispatch: Dispatch<EntitiesAction>) => {
     dispatch({ type: LOAD_NEXT });
     try {
       const nextTimeline = await axios.get(HOME_TIMELINE, {
         withCredentials: true,
         params: {
-          max_id
+          max_id: maxId
         }
       });
       if (nextTimeline) {

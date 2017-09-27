@@ -1,12 +1,13 @@
 // @flow
-import React, { Component } from 'react';
-import type { ComponentType } from 'react';
-import { withStyles } from 'material-ui/styles';
+import * as React from 'react';
+import { Component } from 'react';
+import { ClassNameMap } from 'material-ui';
+import { withStyles, StyleRules, StyleRulesCallback } from 'material-ui/styles';
 import ArrowUpIcon from 'material-ui-icons/KeyboardArrowUp';
 import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown';
-import { Motion, spring } from 'react-motion';
+// import { Motion, spring } from 'react-motion';
 
-const styles = {
+const styles: StyleRules | StyleRulesCallback = {
   root: {
     position: 'relative'
   },
@@ -22,7 +23,7 @@ const styles = {
 };
 
 type Props = {
-  classes: Object
+  classes: ClassNameMap
 };
 
 type State = {
@@ -30,23 +31,21 @@ type State = {
 };
 
 export default function pullDownRequest(requestAction: Function) {
-  function enhance(BaseComponent: ComponentType<any>) {
+  function enhance(BaseComponent: React.ComponentClass) {
     class PullDownRequest extends Component<Props, State> {
       state = {
         top: 0
       };
 
-      touchStartY: number;
+      touchStartY: number | null;
 
-      ontouchstart = (e: TouchEvent) => {
-        if (e.target.scrollTop === 0) {
+      ontouchstart = (e: React.TouchEvent<HTMLDivElement>) => {
           e.preventDefault();
           e.stopPropagation();
           this.touchStartY = e.touches[0].pageY;
-        }
-      };
+      }
 
-      ontouchmove = (e: TouchEvent) => {
+      ontouchmove = (e: React.TouchEvent<HTMLDivElement>) => {
         if (this.touchStartY) {
           e.preventDefault();
           e.stopPropagation();
@@ -59,7 +58,7 @@ export default function pullDownRequest(requestAction: Function) {
         }
       };
 
-      ontouchend = (e: TouchEvent) => {
+      ontouchend = (e: React.TouchEvent<HTMLDivElement>) => {
         if (this.touchStartY) {
           e.preventDefault();
           e.stopPropagation();

@@ -1,16 +1,18 @@
-// @flow
-import React, { PureComponent } from 'react';
-import { withStyles } from 'material-ui/styles';
+import * as React from 'react';
+import { withStyles, StyleRules, StyleRulesCallback } from 'material-ui/styles';
+import { ClassNameMap } from 'material-ui';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
-import Typography from 'material-ui/Typography';
 import GradeIcon from 'material-ui-icons/Grade';
 import { Link } from 'react-router-dom';
+
 import ActionBar from './ActionBar';
+
+import { EmotionsState } from '../../redux/modules/emotions';
 
 import { parseTweet } from '../../utils/parseTweet';
 
-const styles = {
+const styles: StyleRules | StyleRulesCallback = {
   root: {
     margin: '1px 0'
   },
@@ -21,12 +23,12 @@ const styles = {
   },
   avatar: {
     margin: '0 0.3em',
-    flexGrow: '1'
+    flexGrow: 1
   },
-  content: {
+  contentContainer: {
     margin: '0 0.3em',
-    flexGrow: '7',
-    width: '100%'
+    flexGrow: 7,
+    width: '100%',
   },
   contentHeader: {
     display: 'flex',
@@ -34,10 +36,10 @@ const styles = {
     flexDirection: 'row',
     marginBottom: '0.15em'
   },
-  name: {
+  userName: {
     textDecoration: 'none',
-    fontWeight: 'bold',
-    color: '#14171a'
+    color: '#14171a',
+    fontWeight: 500,
   },
   screenName: {
     textDecoration: 'none',
@@ -46,7 +48,7 @@ const styles = {
 };
 
 type Props = {
-  classes: Object,
+  classes: ClassNameMap,
   text: string,
   name: string,
   screen_name: string,
@@ -54,10 +56,10 @@ type Props = {
   reposts_count: number,
   comments_count: number,
   attitudes_count: number,
-  emotions: Object
+  emotions: EmotionsState
 };
 
-class Card extends PureComponent<Props> {
+class Card extends React.PureComponent<Props> {
   render() {
     const { classes } = this.props;
     const {
@@ -70,18 +72,18 @@ class Card extends PureComponent<Props> {
       attitudes_count,
       emotions
     } = this.props;
-    const actionBarProps = { reposts_count, comments_count, attitudes_count };
+    let actionBarProps = { reposts_count, comments_count, attitudes_count };
     return (
       <Paper elevation={1} className={classes.root}>
-        <div className={classes.container} elevation="1">
+        <div className={classes.container}>
           <div className={classes.avatar}>
             <Link to={`/${screen_name}`}>
               <Avatar alt="avatar" src={profile_image_url} />
             </Link>
           </div>
-          <div className={classes.content}>
+          <div className={classes.contentContainer}>
             <div className={classes.contentHeader}>
-              <Link to={screen_name} className={classes.name}>
+              <Link to={screen_name} className={classes.userName}>
                 {name}
               </Link>
               <GradeIcon />

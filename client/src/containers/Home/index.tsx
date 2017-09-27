@@ -1,26 +1,28 @@
-// @flow
-import React, { Component } from 'react';
+import * as React from 'react';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect, Dispatch } from 'react-redux';
+
 import pullDownRequest from '../../hoc/pullDownRequest';
 
 import Card from '../../components/Home/Card';
-
 import {
   loadHomeTimeline,
   loadNextTimeline,
-  loadSinceTimeline
+  loadSinceTimeline,
+  EntitiesAction,
 } from '../../redux/modules/entities';
+import { StoreState } from '../../types';
+
 import { tweetCardInfoSelector } from './selector';
 
 type Props = {
-  loadHomeTimeline: Function,
+  loadHomeTimeline: () => void,
   fetchStatus: string,
   tweets: Array<Object>,
   emotions: Object
 };
 
-class Home extends Component<Props> {
+class Home extends React.Component<Props> {
   componentDidMount() {
     this.props.loadHomeTimeline();
   }
@@ -36,10 +38,10 @@ class Home extends Component<Props> {
         <Card key={tweet.id} {...tweet} emotions={emotions} />
       ));
     }
-  };
+  }
 
   render() {
-    const { fetchStatus, tweets } = this.props;
+    // const { fetchStatus, tweets } = this.props;
     return (
       <div>
         {this.getHome()}
@@ -48,7 +50,7 @@ class Home extends Component<Props> {
   }
 }
 
-const mapStateTopProps = state => ({
+const mapStateTopProps = (state: StoreState) => ({
   emotions: state.emotions,
   fetchStatus: state.entities.fetchStatus,
   max_id: state.entities.max_id,
@@ -56,13 +58,13 @@ const mapStateTopProps = state => ({
   tweets: tweetCardInfoSelector(state)
 });
 
-const mapActionToProps = dispatch => ({
+const mapActionToProps = (dispatch: Dispatch<EntitiesAction>) => ({
   loadHomeTimeline: bindActionCreators(loadHomeTimeline, dispatch),
   loadNextTimeline: bindActionCreators(loadNextTimeline, dispatch),
   loadSinceTimeline: bindActionCreators(loadSinceTimeline, dispatch)
 });
 
-const HomeWithPullDownRequest = pullDownRequest(() => { console.log('pull down~') })(Home);
+const HomeWithPullDownRequest = pullDownRequest(() => { console.log('pull down~'); })(Home);
 
 // export default connect(mapStateTopProps, mapActionToProps)(Home);
 export default connect(mapStateTopProps, mapActionToProps)(

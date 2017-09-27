@@ -9,7 +9,7 @@ export const history = createHistory();
 
 const RouterMiddleware = routerMiddleware(history);
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // tslint:disable-line
 
 const store = createStore(
   reducer,
