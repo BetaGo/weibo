@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withStyles, StyleRules, StyleRulesCallback } from 'material-ui/styles';
-import { ClassNameMap } from 'material-ui';
+// import { ClassNameMap } from 'material-ui';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import GradeIcon from 'material-ui-icons/Grade';
@@ -47,19 +47,39 @@ const styles: StyleRules | StyleRulesCallback = {
   }
 };
 
-type Props = {
-  classes: ClassNameMap,
-  text: string,
-  name: string,
-  screen_name: string,
-  profile_image_url: string,
-  reposts_count: number,
-  comments_count: number,
-  attitudes_count: number,
-  emotions: EmotionsState
-};
+interface PropsType {
+  classes?: {
+    root: string,
+    container: string,
+    avatar: string,
+    contentContainer: string,
+    contentHeader: string,
+    userName: string,
+    screenName: string
+  };
+  text: string;
+  name: string;
+  screen_name: string;
+  profile_image_url: string;
+  reposts_count: number;
+  comments_count: number;
+  attitudes_count: number;
+  emotions: EmotionsState;
+}
 
-class Card extends React.PureComponent<Props> {
+class Card extends React.PureComponent<PropsType, {}> {
+  public static defaultProps: Partial<PropsType> = {
+    classes: {
+      root: '',
+      container: '',
+      avatar: '',
+      contentContainer: '',
+      contentHeader: '',
+      userName: '',
+      screenName: ''
+    }
+  };
+
   render() {
     const { classes } = this.props;
     const {

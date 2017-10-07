@@ -10,29 +10,31 @@ export const LOAD_SUCCESS = 'weibo/session/LOAD_SUCCESS';
 export const LOAD_FAIL = 'weibo/session/LOAD_FAIL';
 
 // types
-type LOAD = typeof LOAD;
-type LOAD_SUCCESS = typeof LOAD_SUCCESS;
-type LOAD_FAIL = typeof LOAD_FAIL;
+export type LOAD = typeof LOAD;
+export type LOAD_SUCCESS = typeof LOAD_SUCCESS;
+export type LOAD_FAIL = typeof LOAD_FAIL;
 
-interface SessionLoad {
+export interface SessionLoad {
   type: LOAD;
 }
-interface SessionLoadSuccess {
+export interface SessionLoadSuccess {
   type: LOAD_SUCCESS;
   payload: {};
 }
-interface SessionLoadFail {
+export interface SessionLoadFail {
   type: LOAD_FAIL;
   payload: {};
 }
 export type SessionAction = SessionLoad | SessionLoadSuccess | SessionLoadFail;
 
 export interface SessionState {
+  profile_image_url: string;
   error: {};
   fetchStatus: string;
 }
 
 const initialState = {
+  profile_image_url: '',
   error: {},
   fetchStatus: 'loading'
 };

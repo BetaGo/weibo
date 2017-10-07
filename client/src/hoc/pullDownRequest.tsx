@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import { Component } from 'react';
 import { ClassNameMap } from 'material-ui';
@@ -31,7 +30,7 @@ type State = {
 };
 
 export default function pullDownRequest(requestAction: Function)
-  : (BaseComponent: React.ComponentClass) => React.ComponentClass {
+  : (BaseComponent: React.ComponentType) => React.ComponentClass {
   function enhance(BaseComponent: React.ComponentClass): React.ComponentClass {
     class PullDownRequest extends Component<Props, State> {
       state = {

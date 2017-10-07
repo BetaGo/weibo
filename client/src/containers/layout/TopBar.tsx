@@ -9,16 +9,25 @@ import MessageIcon from 'material-ui-icons/Message';
 
 import HomeHeader from '../Home/Header';
 
-type State = {
-  value: number,
-};
+interface StateType {
+  value: number;
+}
 
-class TopBar extends React.Component<{}, State> {
+interface PropsType {
+  loadUserInfo: () => void;
+  loadEmotions: () => void;
+}
+class TopBar extends React.Component<PropsType, StateType> {
   state = {
     value: 0,
   };
 
-  handleChange = (event: React.ChangeEvent<{}>, value: any) => {
+  componentDidMount() {
+    this.props.loadUserInfo();
+    this.props.loadEmotions();
+  }
+  
+  handleChange = (event: React.ChangeEvent<{}>, value: number) => {
     this.setState({ value });
   }
   render() {

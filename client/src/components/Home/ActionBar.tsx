@@ -4,7 +4,7 @@ import RepeatIcon from 'material-ui-icons/Repeat';
 import MessageIcon from 'material-ui-icons/Message';
 import FavoriteIcon from 'material-ui-icons/FavoriteBorder';
 import CommentIcon from 'material-ui-icons/ChatBubbleOutline';
-import { ClassNameMap } from 'material-ui';
+// import { ClassNameMap } from 'material-ui';
 
 const styles: StyleRules | StyleRulesCallback = {
   root: {
@@ -22,13 +22,22 @@ const styles: StyleRules | StyleRulesCallback = {
 };
 
 interface ActionBarProps {
-  classes: ClassNameMap;
+  classes?: {
+    root: string;
+    item: string;
+  };
   reposts_count: number;
   comments_count: number;
   attitudes_count: number;
 }
 
 class ActionBar extends React.Component<ActionBarProps> {
+  public static defaultProps: Partial<ActionBarProps> = {
+    classes: {
+      root: '',
+      item: ''
+    }
+  };
   
   render() {
     const { classes } = this.props;

@@ -19,19 +19,14 @@ const mapDispatchToProps = (dispatch: Dispatch<EmotionsAction | SessionAction>) 
   loadUserInfo: bindActionCreators(loadUserInfo, dispatch),
 });
 
-class Layout extends React.Component<LayoutProps> {
-  componentDidMount() {
-    this.props.loadEmotions();
-    this.props.loadUserInfo();
-  }
-  render() {
-    return (
-      <div>
-        <TopBar />
-        <Route path="/home" component={Home} />
-      </div>
-    );
-  }
-}
+const Layout = (props: LayoutProps) => {
+  const {loadEmotions, loadUserInfo} = props;
+  return (
+    <div>
+      <TopBar loadEmotions={loadEmotions} loadUserInfo={loadUserInfo} />
+      <Route path="/home" component={Home} />
+    </div>
+  );
+};
 
 export default connect(null, mapDispatchToProps)(Layout);

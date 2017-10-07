@@ -16,43 +16,39 @@ import { EmotionsState } from '../../redux/modules/emotions';
 
 import { tweetCardInfoSelector, TweetCardData } from './selector';
 
-type Props = {
-  loadHomeTimeline: () => void,
-  fetchStatus: string,
-  tweets: Array<TweetCardData>,
-  emotions: EmotionsState,
-  max_id: number,
-  since_id: number,
-};
+interface PropsTypes {
+  loadHomeTimeline: () => (dispatch: Dispatch<EntitiesAction>) => Promise<void>;
+  loadNextTimeline: () => (dispatch: Dispatch<EntitiesAction>) => Promise<void>;
+  loadSinceTimeline: () => (dispatch: Dispatch<EntitiesAction>) => Promise<void>;
+  fetchStatus: string;
+  tweets: Array<TweetCardData>;
+  emotions: EmotionsState;
+  max_id: number;
+  since_id: number;
+}
 
-class Home extends React.Component<Props> {
-  componentDidMount() {
-    this.props.loadHomeTimeline();
-  }
-
-  getHome = () => {
-    if (this.props.fetchStatus === 'loading') {
+const Home = (props: PropsTypes) => {
+  const getHome = () => {
+    if (props.fetchStatus === 'loading') {
       return <div>加载中</div>;
-    } else if (this.props.fetchStatus === 'error') {
+    } else if (props.fetchStatus === 'error') {
       return <div>出错啦o(╥﹏╥)o</div>;
     } else {
-      const { tweets, emotions } = this.props;
+      const { tweets, emotions } = props;
       return tweets.map(tweet => {
         const cardData = { ...tweet, emotions: emotions };
         return  (<Card key={tweet.id} {...cardData} />);
       });
     }
-  }
+  };
 
-  render() {
-    // const { fetchStatus, tweets } = this.props;
-    return (
-      <div>
-        {this.getHome()}
-      </div>
-    );
-  }
-}
+  // const { fetchStatus, tweets } = this.props;
+  return (
+    <div>
+      {getHome()}
+    </div>
+  );
+};
 
 const mapStateTopProps = (state: StoreState) => ({
   emotions: state.emotions,
@@ -68,11 +64,13 @@ const mapActionToProps = (dispatch: Dispatch<EntitiesAction>) => ({
   loadSinceTimeline: bindActionCreators(loadSinceTimeline, dispatch)
 });
 
-const HomeWithPullDownRequest = pullDownRequest(() => { console.log('pull down~'); })(Home);
+// const HomeWithPullDownRequest = pullDownRequest(() => { console.log('pull down~'); })(Home);
 // const enhancer= pullDownRequest(() => { console.log('pull down~'); });
 // const HomeWithPullDownRequest = enhancer()
 
 // export default connect(mapStateTopProps, mapActionToProps)(Home);
-export default connect(mapStateTopProps, mapActionToProps)(
-  HomeWithPullDownRequest
-);
+// export default connect(mapStateTopProps, mapActionToProps)(
+//   HomeWithPullDownRequest
+// );
+const connectedHome = connect(mapStateTopProps, mapActionToProps)(Home);
+export default pullDownRequest(() => { console.log('pull down~'); })(connectedHome);
