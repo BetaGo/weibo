@@ -4,7 +4,7 @@ import { Dispatch } from 'react-redux';
 import { emotionList } from '../schema';
 
 // API
-const API = 'http://192.168.56.20:8080/api/emotions';
+const API = 'http://127.0.0.1:8080/api/emotions';
 
 // constants
 export const LOAD = 'weibo/emotions/LOAD';

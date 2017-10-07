@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Component } from 'react';
 import { ClassNameMap } from 'material-ui';
 import { withStyles, StyleRules, StyleRulesCallback } from 'material-ui/styles';
 import ArrowUpIcon from 'material-ui-icons/KeyboardArrowUp';
@@ -32,7 +31,8 @@ type State = {
 export default function pullDownRequest(requestAction: Function)
   : (BaseComponent: React.ComponentType) => React.ComponentClass {
   function enhance(BaseComponent: React.ComponentClass): React.ComponentClass {
-    class PullDownRequest extends Component<Props, State> {
+    class WithPullDownRequest extends React.Component<Props, State> {
+      static displayName: string;
       state = {
         top: 0
       };
@@ -120,8 +120,11 @@ export default function pullDownRequest(requestAction: Function)
         );
       }
     }
-
-    return withStyles(styles)(PullDownRequest);
+    WithPullDownRequest.displayName = `PulldownRequest(${getDisplayName(BaseComponent)})`;
+    return withStyles(styles)(WithPullDownRequest);
+  }
+  function getDisplayName(WrappedComponent: React.ComponentType) {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
   }
   return enhance;
 }
