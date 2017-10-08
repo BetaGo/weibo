@@ -120,7 +120,7 @@ const initialState = {
   users: {},
   tweets: {},
   retweet: {},
-  statuses: [-1],
+  statuses: new Array,
   error: {},
   fetchStatus: 'loading',
   since_id: 0,

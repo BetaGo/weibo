@@ -31,10 +31,6 @@ export const tweetCardInfoSelector = createSelector(
   ): Array<TweetCardData> => {
     const sortedTimeline = timeline.sort((a, b) => b - a);
     return sortedTimeline.map(value => {
-      if (value === -1) {
-        // initial state 为 -1, 在这里把 -1 过滤掉
-        return undefined;
-      }
       let tweet = tweets[value];
       let user = users[tweet.user];
       // let retweet = tweet.retweet ? retweets[tweet.retweet] : null;
