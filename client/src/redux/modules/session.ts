@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { Dispatch } from 'react-redux';
+import * as APIs from '../../config/api';
 
 // API
-const API = 'http://127.0.0.1:8080/api/user_info';
+const API = APIs.userInfo;
 
 // constants
 export const LOAD = 'weibo/session/LOAD';

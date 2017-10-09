@@ -2,9 +2,10 @@ import axios from 'axios';
 import { normalize } from 'normalizr';
 import { Dispatch } from 'react-redux';
 import { emotionList } from '../schema';
+import * as APIs from '../../config/api';
 
 // API
-const API = 'http://127.0.0.1:8080/api/emotions';
+const API = APIs.emotions;
 
 // constants
 export const LOAD = 'weibo/emotions/LOAD';

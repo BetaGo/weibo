@@ -2,9 +2,10 @@ import axios from 'axios';
 import { normalize } from 'normalizr';
 import { Dispatch } from 'react-redux';
 import { timeline } from '../schema';
+import * as APIs from '../../config/api';
 
 // API
-const HOME_TIMELINE = 'http://127.0.0.1:8080/api/home_timeline';
+const API = APIs.homeTimeline;
 
 // constants
 const LOAD = 'weibo/tweets/LOAD';
@@ -213,7 +214,7 @@ export function loadHomeTimeline() {
   return async (dispatch: Dispatch<EntitiesAction>) => {
     dispatch({ type: LOAD });
     try {
-      const homeTimeline = await axios.get(HOME_TIMELINE, {
+      const homeTimeline = await axios.get(API, {
         withCredentials: true
       });
 
@@ -241,7 +242,7 @@ export function loadSinceTimeline(sinceId: number) {
   return async (dispatch: Dispatch<EntitiesAction>) => {
     dispatch({ type: LOAD_SINCE });
     try {
-      const sinceTimeline = await axios.get(HOME_TIMELINE, {
+      const sinceTimeline = await axios.get(API, {
         withCredentials: true,
         params: {
           since_id: sinceId
@@ -266,7 +267,7 @@ export function loadNextTimeline(maxId: number) {
   return async (dispatch: Dispatch<EntitiesAction>) => {
     dispatch({ type: LOAD_NEXT });
     try {
-      const nextTimeline = await axios.get(HOME_TIMELINE, {
+      const nextTimeline = await axios.get(API, {
         withCredentials: true,
         params: {
           max_id: maxId

@@ -7,7 +7,7 @@ export type EmotionsConfig = {
 };
 
 /**
- * 获取当前登录用户及其所关注（授权）用户的最新微博
+ * 获取微博表情
  * @param {Object} 请求参数
  */
 function getEmotions(params: EmotionsConfig) {
