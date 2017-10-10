@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Route } from 'react-router';
+import { withStyles, StyleRules, StyleRulesCallback } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import HomeIcon from 'material-ui-icons/Home';
@@ -9,14 +10,29 @@ import MessageIcon from 'material-ui-icons/Message';
 
 import HomeHeader from '../Home/Header';
 
+const styles: StyleRules | StyleRulesCallback = {
+  root: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    zIndex: 999
+  }
+};
+
 interface StateType {
   value: number;
 }
 
 interface PropsType {
+  classes?: {
+    root: string;
+  };
   loadUserInfo: () => void;
   loadEmotions: () => void;
 }
+
+@withStyles(styles)
 class TopBar extends React.Component<PropsType, StateType> {
   state = {
     value: 0,
@@ -31,8 +47,9 @@ class TopBar extends React.Component<PropsType, StateType> {
     this.setState({ value });
   }
   render() {
+    const { classes } = this.props;
     return (
-      <Paper>
+      <Paper className={classes.root}>
         <Route path="/home" component={HomeHeader} />
         <Tabs
           value={this.state.value}

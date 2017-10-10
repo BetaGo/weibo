@@ -7,7 +7,8 @@ import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown';
 
 const styles: StyleRules | StyleRulesCallback = {
   root: {
-    position: 'relative'
+    position: 'relative',
+    marginTop: -50
   },
   pointerContainer: {
     position: 'relative',

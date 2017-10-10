@@ -73,4 +73,5 @@ const mapActionToProps = (dispatch: Dispatch<EntitiesAction>) => ({
 //   HomeWithPullDownRequest
 // );
 const connectedHome = connect(mapStateTopProps, mapActionToProps)(Home);
-export default pullDownRequest(() => { console.log('pull down~'); })(connectedHome);
+export default pullDownRequest(loadNextTimeline)(connectedHome);
+// export default connectedHome;
