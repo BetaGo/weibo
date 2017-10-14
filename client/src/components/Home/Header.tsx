@@ -27,7 +27,9 @@ export interface HeaderProps {
 
 class Header extends React.Component<HeaderProps & WithStyles, {}> {
   componentDidMount() {
-    this.props.loadHomeTimeline();
+    if ( typeof this.props.loadHomeTimeline  === 'function') {
+      this.props.loadHomeTimeline();
+    }
   }
   
   render() {
@@ -35,6 +37,7 @@ class Header extends React.Component<HeaderProps & WithStyles, {}> {
     const { profile_image_url } = this.props;
     return (
       <div className={classes.root}>
+        <div className="wtf">wtf</div>
         <Avatar
           alt="avatar"
           src={profile_image_url}
