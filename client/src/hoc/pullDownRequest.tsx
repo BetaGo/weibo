@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { ClassNameMap } from 'material-ui';
-import { withStyles, StyleRules, StyleRulesCallback } from 'material-ui/styles';
+import { withStyles, StyleRules, StyleRulesCallback, WithStyles } from 'material-ui/styles';
 import ArrowUpIcon from 'material-ui-icons/KeyboardArrowUp';
 import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown';
 // import { Motion, spring } from 'react-motion';
@@ -21,18 +20,13 @@ const styles: StyleRules | StyleRulesCallback = {
   }
 };
 
-type Props = {
-  classes: ClassNameMap
-};
-
 type State = {
   top: number
 };
 
-export default function pullDownRequest(requestAction: Function)
-  : (BaseComponent: React.ComponentType) => React.ComponentClass {
-  function enhance(BaseComponent: React.ComponentClass): React.ComponentClass {
-    class WithPullDownRequest extends React.Component<Props, State> {
+export default function pullDownRequest(requestAction: Function) {
+  function enhance(BaseComponent: React.ComponentType) {
+    class WithPullDownRequest extends React.Component<WithStyles, State> {
       static displayName: string;
       state = {
         top: 0
@@ -124,8 +118,10 @@ export default function pullDownRequest(requestAction: Function)
     WithPullDownRequest.displayName = `PulldownRequest(${getDisplayName(BaseComponent)})`;
     return withStyles(styles)(WithPullDownRequest);
   }
+
   function getDisplayName(WrappedComponent: React.ComponentType) {
     return WrappedComponent.displayName || WrappedComponent.name || 'Component';
   }
+  
   return enhance;
 }

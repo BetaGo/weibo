@@ -2,8 +2,6 @@ import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect, Dispatch } from 'react-redux';
 
-import pullDownRequest from '../../hoc/pullDownRequest';
-
 import Card from '../../components/Home/Card';
 import {
   loadHomeTimeline,
@@ -27,7 +25,7 @@ interface PropsTypes {
   since_id: number;
 }
 
-const Home = (props: PropsTypes) => {
+const HomeContent = (props: PropsTypes) => {
   const getHome = () => {
     if (props.fetchStatus === 'loading') {
       return <div>加载中</div>;
@@ -72,6 +70,6 @@ const mapActionToProps = (dispatch: Dispatch<EntitiesAction>) => ({
 // export default connect(mapStateTopProps, mapActionToProps)(
 //   HomeWithPullDownRequest
 // );
-const connectedHome = connect(mapStateTopProps, mapActionToProps)(Home);
-export default pullDownRequest(loadNextTimeline)(connectedHome);
-// export default connectedHome;
+const connectedHome = connect(mapStateTopProps, mapActionToProps)(HomeContent);
+// export default pullDownRequest(loadNextTimeline)(connectedHome);
+export default connectedHome;

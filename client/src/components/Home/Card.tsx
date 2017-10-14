@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withStyles, StyleRules, StyleRulesCallback } from 'material-ui/styles';
+import { withStyles, StyleRules, StyleRulesCallback, WithStyles } from 'material-ui/styles';
 // import { ClassNameMap } from 'material-ui';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
@@ -48,15 +48,6 @@ const styles: StyleRules | StyleRulesCallback = {
 };
 
 interface PropsType {
-  classes?: {
-    root: string,
-    container: string,
-    avatar: string,
-    contentContainer: string,
-    contentHeader: string,
-    userName: string,
-    screenName: string
-  };
   text: string;
   name: string;
   screen_name: string;
@@ -64,22 +55,10 @@ interface PropsType {
   reposts_count: number;
   comments_count: number;
   attitudes_count: number;
-  emotions: EmotionsState;
+  emotions?: EmotionsState;
 }
 
-class Card extends React.PureComponent<PropsType, {}> {
-  public static defaultProps: Partial<PropsType> = {
-    classes: {
-      root: '',
-      container: '',
-      avatar: '',
-      contentContainer: '',
-      contentHeader: '',
-      userName: '',
-      screenName: ''
-    }
-  };
-
+class Card extends React.Component<PropsType & WithStyles, {}> {
   render() {
     const { classes } = this.props;
     const {

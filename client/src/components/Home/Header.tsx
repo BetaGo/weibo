@@ -1,8 +1,11 @@
 import * as React from 'react';
 // import { ClassNameMap } from 'material-ui';
-import { withStyles, StyleRules, StyleRulesCallback } from 'material-ui/styles';
+import { withStyles, StyleRules, StyleRulesCallback, WithStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
+import { Dispatch } from 'redux';
+
+import { EntitiesAction } from '../../redux/modules/entities';
 
 const styles: StyleRules | StyleRulesCallback = {
   root: {
@@ -17,23 +20,12 @@ const styles: StyleRules | StyleRulesCallback = {
   }
 };
 
-interface PropsType {
-  classes?: {
-    root: string;
-    avatar: string;
-  };
+export interface HeaderProps {
   profile_image_url: string;
-  loadHomeTimeline: () => void;
+  loadHomeTimeline?: () => (dispatch: Dispatch<EntitiesAction>) => Promise<void>;
 }
 
-class Header extends React.Component<PropsType, {}> {
-  public static defaultProps: Partial<PropsType> = {
-    classes: {
-      root: '',
-      avatar: ''
-    }
-  };
-
+class Header extends React.Component<HeaderProps & WithStyles, {}> {
   componentDidMount() {
     this.props.loadHomeTimeline();
   }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withStyles, StyleRules, StyleRulesCallback } from 'material-ui/styles';
+import { withStyles, StyleRules, StyleRulesCallback, WithStyles } from 'material-ui/styles';
 import RepeatIcon from 'material-ui-icons/Repeat';
 import MessageIcon from 'material-ui-icons/Message';
 import FavoriteIcon from 'material-ui-icons/FavoriteBorder';
@@ -22,23 +22,12 @@ const styles: StyleRules | StyleRulesCallback = {
 };
 
 interface ActionBarProps {
-  classes?: {
-    root: string;
-    item: string;
-  };
   reposts_count: number;
   comments_count: number;
   attitudes_count: number;
 }
 
-class ActionBar extends React.Component<ActionBarProps> {
-  public static defaultProps: Partial<ActionBarProps> = {
-    classes: {
-      root: '',
-      item: ''
-    }
-  };
-  
+class ActionBar extends React.Component<ActionBarProps & WithStyles> {
   render() {
     const { classes } = this.props;
     const { reposts_count, comments_count, attitudes_count } = this.props;

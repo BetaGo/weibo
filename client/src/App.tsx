@@ -4,7 +4,7 @@ import { ConnectedRouter } from 'react-router-redux';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
 import store, { history } from './redux/configStore';
-import Layout from './containers/layout';
+import Layout from './layout';
 
 const theme = createMuiTheme();
 

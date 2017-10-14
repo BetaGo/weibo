@@ -5,10 +5,10 @@ import { connect, Dispatch } from 'react-redux';
 import { StoreState } from '../../types';
 import { EntitiesAction, loadHomeTimeline } from '../../redux/modules/entities';
 
-import Header from '../../components/Home/Header';
+import Header, { HeaderProps } from '../../components/Home/Header';
 
 const HomeHeader = (
-  { profile_image_url, loadHomeTimeline }: { profile_image_url: string, loadHomeTimeline: () => void}
+  { profile_image_url, loadHomeTimeline }: HeaderProps
 ) => (
   <Header profile_image_url={profile_image_url} loadHomeTimeline={loadHomeTimeline} />
 );

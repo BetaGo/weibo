@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Route } from 'react-router';
-import { withStyles, StyleRules, StyleRulesCallback } from 'material-ui/styles';
+import { withStyles, StyleRules, StyleRulesCallback, WithStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import HomeIcon from 'material-ui-icons/Home';
@@ -25,15 +25,11 @@ interface StateType {
 }
 
 interface PropsType {
-  classes?: {
-    root: string;
-  };
   loadUserInfo: () => void;
   loadEmotions: () => void;
 }
 
-@withStyles(styles)
-class TopBar extends React.Component<PropsType, StateType> {
+class TopBar extends React.Component<PropsType & WithStyles, StateType> {
   state = {
     value: 0,
   };
@@ -68,4 +64,4 @@ class TopBar extends React.Component<PropsType, StateType> {
   }
 }
 
-export default TopBar;
+export default withStyles(styles)(TopBar);
