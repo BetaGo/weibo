@@ -3,14 +3,15 @@ import * as React from 'react';
 import { mount } from 'enzyme';
 
 import Avatar from 'material-ui/Avatar';
+import Typography from 'material-ui/Typography';
 import Header from './Header';
 
 describe('<Header />', () => {
   test('要有一个地址正确的头像', () => {
     expect(mount(<Header profile_image_url="example.jpg" />).find(Avatar).prop('src')).toBe('example.jpg');
   });
-  test('要找到WTF', () => {
-    expect(mount(<Header profile_image_url="example.jpg" />).find('.wtf').text()).toBe('wtf');
+  test('要有一个名为“主页”标题', () => {
+    expect(mount(<Header profile_image_url="example.jpg" />).find(Typography).text()).toBe('主页');
   });
 });
 

@@ -6,7 +6,7 @@
     "axios": "^0.16.2",
     "classnames": "^2.2.5",
     "history": "^4.7.2",
-    "material-ui": "^1.0.0-beta.16",
+    "material-ui": "^1.0.0-beta.17",
     "material-ui-icons": "^1.0.0-beta.15",
     "normalizr": "^3.2.3",
     "react": "^16.0.0",

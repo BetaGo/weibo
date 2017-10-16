@@ -3,9 +3,6 @@ import * as React from 'react';
 import { withStyles, StyleRules, StyleRulesCallback, WithStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
-import { Dispatch } from 'redux';
-
-import { EntitiesAction } from '../../redux/modules/entities';
 
 const styles: StyleRules | StyleRulesCallback = {
   root: {
@@ -22,22 +19,15 @@ const styles: StyleRules | StyleRulesCallback = {
 
 export interface HeaderProps {
   profile_image_url: string;
-  loadHomeTimeline?: () => (dispatch: Dispatch<EntitiesAction>) => Promise<void>;
 }
 
 class Header extends React.Component<HeaderProps & WithStyles, {}> {
-  componentDidMount() {
-    if ( typeof this.props.loadHomeTimeline  === 'function') {
-      this.props.loadHomeTimeline();
-    }
-  }
-  
+
   render() {
     const { classes } = this.props;
     const { profile_image_url } = this.props;
     return (
       <div className={classes.root}>
-        <div className="wtf">wtf</div>
         <Avatar
           alt="avatar"
           src={profile_image_url}

@@ -5,28 +5,16 @@ import SearchIcon from 'material-ui-icons/Search';
 import NotificationsIcon from 'material-ui-icons/Notifications';
 import MessageIcon from 'material-ui-icons/Message';
 
-import { Dispatch } from 'redux';
+// import { Link } from 'react-router-dom';
 
-import { EmotionsAction } from '../../redux/modules/emotions';
-import { SessionAction } from '../../redux/modules/session';
-
-export interface ActionBarProps {
-  loadUserInfo: () => (dispatch: Dispatch<SessionAction>) => Promise<void>;
-  loadEmotions: () => (dispatch: Dispatch<EmotionsAction>) => Promise<void>;
-}
 interface StateType {
   value: number;
 }
 
-class ActionBar extends React.Component<ActionBarProps, StateType> {
+class ActionBar extends React.Component<{}, StateType> {
   state = {
     value: 0,
   };
-
-  componentDidMount() {
-    this.props.loadEmotions();
-    this.props.loadUserInfo();
-  }
 
   handleChange = (event: React.ChangeEvent<{}>, value: number) => {
     this.setState({ value });
