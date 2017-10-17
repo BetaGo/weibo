@@ -1,18 +1,44 @@
 import axios from 'axios';
+import { Dispatch } from 'react-redux';
+import * as APIs from '../../config/api';
 
 // API
-const API = 'http://127.0.0.1:8080/api/user_info';
+const API = APIs.userInfo;
 
-const LOAD = 'weibo/session/LOAD';
-const LOAD_SUCCESS = 'weibo/session/LOAD_SUCCESS';
-const LOAD_FAIL = 'weibo/session/LOAD_FAIL';
+// constants
+export const LOAD = 'weibo/session/LOAD';
+export const LOAD_SUCCESS = 'weibo/session/LOAD_SUCCESS';
+export const LOAD_FAIL = 'weibo/session/LOAD_FAIL';
+
+// types
+export type LOAD = typeof LOAD;
+export type LOAD_SUCCESS = typeof LOAD_SUCCESS;
+export type LOAD_FAIL = typeof LOAD_FAIL;
+
+export interface SessionLoad {
+  type: LOAD;
+}
+export interface SessionLoadSuccess {
+  type: LOAD_SUCCESS;
+  payload: {};
+}
+export interface SessionLoadFail {
+  type: LOAD_FAIL;
+  payload: {};
+}
+export type SessionAction = SessionLoad | SessionLoadSuccess | SessionLoadFail;
+
+export interface SessionState {
+  error: {};
+  fetchStatus: string;
+}
 
 const initialState = {
   error: {},
   fetchStatus: 'loading'
 };
 
-export default function reducer(state = initialState, action = {}) {
+export default function reducer(state: SessionState = initialState, action: SessionAction) {
   switch (action.type) {
     case LOAD: {
       return {
@@ -43,7 +69,7 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function loadUserInfo() {
-  return async dispatch => {
+  return async (dispatch: Dispatch<SessionAction>) => {
     dispatch({ type: LOAD });
     try {
       const userInfo = await axios.get(API, { withCredentials: true });

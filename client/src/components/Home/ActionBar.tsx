@@ -1,12 +1,12 @@
-// @flow
-import React, { Component } from 'react';
-import { withStyles } from 'material-ui/styles';
+import * as React from 'react';
+import { withStyles, StyleRules, StyleRulesCallback, WithStyles } from 'material-ui/styles';
 import RepeatIcon from 'material-ui-icons/Repeat';
 import MessageIcon from 'material-ui-icons/Message';
 import FavoriteIcon from 'material-ui-icons/FavoriteBorder';
 import CommentIcon from 'material-ui-icons/ChatBubbleOutline';
+// import { ClassNameMap } from 'material-ui';
 
-const styles = {
+const styles: StyleRules | StyleRulesCallback = {
   root: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -21,14 +21,13 @@ const styles = {
   }
 };
 
-type Props = {
-  classes: Object,
-  reposts_count: number,
-  comments_count: number,
-  attitudes_count: number
-};
+interface ActionBarProps {
+  reposts_count: number;
+  comments_count: number;
+  attitudes_count: number;
+}
 
-class ActionBar extends Component<Props> {
+class ActionBar extends React.Component<ActionBarProps & WithStyles> {
   render() {
     const { classes } = this.props;
     const { reposts_count, comments_count, attitudes_count } = this.props;

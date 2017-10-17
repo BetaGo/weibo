@@ -1,10 +1,10 @@
-// @flow
-import React, { Component } from 'react';
-import { withStyles } from 'material-ui/styles';
+import * as React from 'react';
+// import { ClassNameMap } from 'material-ui';
+import { withStyles, StyleRules, StyleRulesCallback, WithStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
 
-const styles = {
+const styles: StyleRules | StyleRulesCallback = {
   root: {
     display: 'flex',
     flexDirection: 'row',
@@ -17,12 +17,12 @@ const styles = {
   }
 };
 
-type Props = {
-  classes: Object,
-  profile_image_url: string
-};
+export interface HeaderProps {
+  profile_image_url: string;
+}
 
-class Header extends Component<Props> {
+class Header extends React.Component<HeaderProps & WithStyles, {}> {
+
   render() {
     const { classes } = this.props;
     const { profile_image_url } = this.props;

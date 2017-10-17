@@ -1,14 +1,13 @@
-// @flow
-import React, { Component } from 'react';
-import type { ComponentType } from 'react';
-import { withStyles } from 'material-ui/styles';
+import * as React from 'react';
+import { withStyles, StyleRules, StyleRulesCallback, WithStyles } from 'material-ui/styles';
 import ArrowUpIcon from 'material-ui-icons/KeyboardArrowUp';
 import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown';
-import { Motion, spring } from 'react-motion';
+// import { Motion, spring } from 'react-motion';
 
-const styles = {
+const styles: StyleRules | StyleRulesCallback = {
   root: {
-    position: 'relative'
+    position: 'relative',
+    marginTop: -50
   },
   pointerContainer: {
     position: 'relative',
@@ -21,32 +20,27 @@ const styles = {
   }
 };
 
-type Props = {
-  classes: Object
-};
-
 type State = {
   top: number
 };
 
 export default function pullDownRequest(requestAction: Function) {
-  function enhance(BaseComponent: ComponentType<any>) {
-    class PullDownRequest extends Component<Props, State> {
+  function enhance(BaseComponent: React.ComponentType) {
+    class WithPullDownRequest extends React.Component<WithStyles, State> {
+      static displayName: string;
       state = {
         top: 0
       };
 
-      touchStartY: number;
+      touchStartY: number | null;
 
-      ontouchstart = (e: TouchEvent) => {
-        if (e.target.scrollTop === 0) {
+      ontouchstart = (e: React.TouchEvent<HTMLDivElement>) => {
           e.preventDefault();
           e.stopPropagation();
           this.touchStartY = e.touches[0].pageY;
-        }
-      };
+      }
 
-      ontouchmove = (e: TouchEvent) => {
+      ontouchmove = (e: React.TouchEvent<HTMLDivElement>) => {
         if (this.touchStartY) {
           e.preventDefault();
           e.stopPropagation();
@@ -57,9 +51,9 @@ export default function pullDownRequest(requestAction: Function) {
             top
           });
         }
-      };
+      }
 
-      ontouchend = (e: TouchEvent) => {
+      ontouchend = (e: React.TouchEvent<HTMLDivElement>) => {
         if (this.touchStartY) {
           e.preventDefault();
           e.stopPropagation();
@@ -77,7 +71,7 @@ export default function pullDownRequest(requestAction: Function) {
           }
           this.touchStartY = null;
         }
-      };
+      }
 
       render() {
         const { classes } = this.props;
@@ -121,8 +115,13 @@ export default function pullDownRequest(requestAction: Function) {
         );
       }
     }
-
-    return withStyles(styles)(PullDownRequest);
+    WithPullDownRequest.displayName = `PulldownRequest(${getDisplayName(BaseComponent)})`;
+    return withStyles(styles)(WithPullDownRequest);
   }
+
+  function getDisplayName(WrappedComponent: React.ComponentType) {
+    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+  }
+  
   return enhance;
 }
