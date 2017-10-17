@@ -29,13 +29,11 @@ export interface SessionLoadFail {
 export type SessionAction = SessionLoad | SessionLoadSuccess | SessionLoadFail;
 
 export interface SessionState {
-  profile_image_url: string;
   error: {};
   fetchStatus: string;
 }
 
 const initialState = {
-  profile_image_url: '',
   error: {},
   fetchStatus: 'loading'
 };
